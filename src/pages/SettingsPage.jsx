@@ -9,7 +9,7 @@ const designMatches = {
   graphite: ['dark', 'night'],
   paper: ['light', 'sepia'],
   rose: ['light', 'sepia'],
-  mocha: ['sepia', 'dark'],
+  mocha: ['light', 'sepia'],
   plum: ['dark', 'night']
 };
 
