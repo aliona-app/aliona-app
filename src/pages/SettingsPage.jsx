@@ -1,7 +1,9 @@
-import { Download, Smartphone, WifiOff } from 'lucide-react';
+import { Download, Palette, Smartphone, WifiOff } from 'lucide-react';
 import { useSettings } from '../contexts/SettingsContext';
 import useIsTouchDevice from '../hooks/useIsTouchDevice';
-import { readingModeLabels, t } from '../i18n/ru';
+import { appDesignLabels, readingModeLabels, t } from '../i18n/ru';
+
+const appDesignOptions = ['tree', 'gray', 'aurora'];
 
 export default function SettingsPage() {
   const { settings, updateSettings } = useSettings();
@@ -13,6 +15,30 @@ export default function SettingsPage() {
         <p className="eyebrow">{t.settings.eyebrow}</p>
         <h2>{t.settings.title}</h2>
         <p>{t.settings.copy}</p>
+      </section>
+
+      <section className="glass-card detail-card detail-card--designs">
+        <h3><Palette size={18} /> {t.settings.appDesign}</h3>
+        <p>{t.settings.appDesignCopy}</p>
+        <div className="design-grid">
+          {appDesignOptions.map((design) => (
+            <button
+              key={design}
+              type="button"
+              className={`design-card design-card--${design} ${settings.appDesign === design ? 'is-active' : ''}`}
+              onClick={() => updateSettings({ appDesign: design })}
+              aria-pressed={settings.appDesign === design}
+            >
+              <span className="design-card__swatches" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+              <strong>{appDesignLabels[design]}</strong>
+            </button>
+          ))}
+        </div>
+        <p className="settings-helper">{t.settings.appDesignHint}</p>
       </section>
 
       <section className="details-grid">
