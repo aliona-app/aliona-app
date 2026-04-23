@@ -1,9 +1,17 @@
 import { Download, Palette, Smartphone, WifiOff } from 'lucide-react';
 import { useSettings } from '../contexts/SettingsContext';
 import useIsTouchDevice from '../hooks/useIsTouchDevice';
-import { appDesignLabels, readingModeLabels, t } from '../i18n/ru';
+import { appDesignDescriptions, appDesignLabels, readingModeLabels, t } from '../i18n/ru';
 
-const appDesignOptions = ['tree', 'gray', 'aurora'];
+const appDesignOptions = ['gray', 'graphite', 'paper', 'plum', 'emerald', 'aurora'];
+const designMatches = {
+  gray: ['dark', 'night'],
+  graphite: ['dark', 'night'],
+  paper: ['light', 'sepia'],
+  plum: ['dark', 'night'],
+  emerald: ['sepia', 'dark'],
+  aurora: ['dark', 'night']
+};
 
 export default function SettingsPage() {
   const { settings, updateSettings } = useSettings();
@@ -20,7 +28,7 @@ export default function SettingsPage() {
       <section className="glass-card detail-card detail-card--designs">
         <h3><Palette size={18} /> {t.settings.appDesign}</h3>
         <p>{t.settings.appDesignCopy}</p>
-        <div className="design-grid">
+        <div className="design-grid design-grid--expanded">
           {appDesignOptions.map((design) => (
             <button
               key={design}
@@ -34,7 +42,18 @@ export default function SettingsPage() {
                 <span />
                 <span />
               </span>
-              <strong>{appDesignLabels[design]}</strong>
+              <div className="design-card__body">
+                <strong>{appDesignLabels[design]}</strong>
+                <span>{appDesignDescriptions[design]}</span>
+              </div>
+              <div className="design-card__themes">
+                <span>{t.settings.appDesignMatch}</span>
+                <div className="theme-pill-row">
+                  {designMatches[design].map((theme) => (
+                    <span key={theme} className={`theme-pill theme-pill--${theme}`}>{theme === 'light' ? 'Светлая' : theme === 'sepia' ? 'Сепия' : theme === 'dark' ? 'Тёмная' : 'Ночная'}</span>
+                  ))}
+                </div>
+              </div>
             </button>
           ))}
         </div>

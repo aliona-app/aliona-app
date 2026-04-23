@@ -29,7 +29,7 @@ export default function ReaderSettingsSheet({ open, onClose }) {
             {themeOptions.map((theme) => (
               <button
                 key={theme}
-                className={`chip ${settings.theme === theme ? 'is-active' : ''}`}
+                className={`chip chip--theme chip--theme-${theme} ${settings.theme === theme ? 'is-active' : ''}`}
                 onClick={() => updateSettings({ theme })}
               >
                 {themeLabels[theme]}

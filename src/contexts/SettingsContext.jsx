@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 const defaultSettings = {
-  appDesign: 'tree',
+  appDesign: 'gray',
   theme: 'dark',
   fontFamily: 'literata',
   fontSize: 18,
@@ -12,23 +12,7 @@ const defaultSettings = {
   brightness: 100
 };
 
-
 const appThemeMap = {
-  tree: {
-    '--bg-base-start': '#0f1612',
-    '--bg-base-end': '#09100c',
-    '--bg-orb-1': 'rgba(104, 154, 98, 0.22)',
-    '--bg-orb-2': 'rgba(173, 119, 67, 0.18)',
-    '--surface': 'rgba(18, 28, 21, 0.78)',
-    '--surface-strong': 'rgba(24, 35, 27, 0.92)',
-    '--surface-border': 'rgba(183, 218, 178, 0.10)',
-    '--text': '#eff3ea',
-    '--muted': '#a7b8a5',
-    '--accent': '#8ea96f',
-    '--accent-2': '#d2914f',
-    '--shadow': '0 20px 60px rgba(0, 0, 0, 0.34)',
-    '--brand-gradient': 'linear-gradient(160deg, rgba(128, 166, 97, 0.88), rgba(196, 132, 74, 0.9))'
-  },
   gray: {
     '--bg-base-start': '#121315',
     '--bg-base-end': '#0c0d0f',
@@ -43,6 +27,66 @@ const appThemeMap = {
     '--accent-2': '#6d7481',
     '--shadow': '0 20px 60px rgba(0, 0, 0, 0.38)',
     '--brand-gradient': 'linear-gradient(160deg, rgba(145, 151, 164, 0.9), rgba(92, 100, 114, 0.92))'
+  },
+  graphite: {
+    '--bg-base-start': '#0e1117',
+    '--bg-base-end': '#07090d',
+    '--bg-orb-1': 'rgba(78, 95, 122, 0.22)',
+    '--bg-orb-2': 'rgba(30, 36, 49, 0.26)',
+    '--surface': 'rgba(17, 21, 28, 0.84)',
+    '--surface-strong': 'rgba(20, 25, 33, 0.95)',
+    '--surface-border': 'rgba(154, 181, 219, 0.11)',
+    '--text': '#eef4ff',
+    '--muted': '#aab7cf',
+    '--accent': '#8ba3c7',
+    '--accent-2': '#5f7393',
+    '--shadow': '0 20px 60px rgba(0, 0, 0, 0.42)',
+    '--brand-gradient': 'linear-gradient(160deg, rgba(146, 169, 204, 0.92), rgba(79, 97, 123, 0.92))'
+  },
+  paper: {
+    '--bg-base-start': '#f5efe3',
+    '--bg-base-end': '#efe4d4',
+    '--bg-orb-1': 'rgba(222, 193, 143, 0.28)',
+    '--bg-orb-2': 'rgba(184, 148, 104, 0.18)',
+    '--surface': 'rgba(255, 250, 243, 0.82)',
+    '--surface-strong': 'rgba(255, 248, 238, 0.96)',
+    '--surface-border': 'rgba(112, 82, 45, 0.12)',
+    '--text': '#2e2417',
+    '--muted': '#77654f',
+    '--accent': '#bd8b4f',
+    '--accent-2': '#8d6940',
+    '--shadow': '0 18px 50px rgba(116, 87, 44, 0.14)',
+    '--brand-gradient': 'linear-gradient(160deg, rgba(197, 146, 82, 0.92), rgba(141, 105, 64, 0.9))'
+  },
+  plum: {
+    '--bg-base-start': '#18111d',
+    '--bg-base-end': '#0f0914',
+    '--bg-orb-1': 'rgba(173, 112, 183, 0.22)',
+    '--bg-orb-2': 'rgba(97, 62, 140, 0.22)',
+    '--surface': 'rgba(33, 22, 39, 0.82)',
+    '--surface-strong': 'rgba(40, 26, 47, 0.95)',
+    '--surface-border': 'rgba(233, 188, 255, 0.10)',
+    '--text': '#f8eefb',
+    '--muted': '#c8b1cf',
+    '--accent': '#c794d6',
+    '--accent-2': '#8a65bf',
+    '--shadow': '0 20px 60px rgba(0, 0, 0, 0.40)',
+    '--brand-gradient': 'linear-gradient(160deg, rgba(204, 144, 223, 0.92), rgba(123, 95, 191, 0.92))'
+  },
+  emerald: {
+    '--bg-base-start': '#0d1714',
+    '--bg-base-end': '#07100d',
+    '--bg-orb-1': 'rgba(74, 175, 145, 0.22)',
+    '--bg-orb-2': 'rgba(42, 108, 95, 0.18)',
+    '--surface': 'rgba(16, 30, 26, 0.82)',
+    '--surface-strong': 'rgba(19, 36, 31, 0.95)',
+    '--surface-border': 'rgba(160, 231, 210, 0.10)',
+    '--text': '#effaf6',
+    '--muted': '#acc9c0',
+    '--accent': '#55b39d',
+    '--accent-2': '#2f7f72',
+    '--shadow': '0 20px 60px rgba(0, 0, 0, 0.38)',
+    '--brand-gradient': 'linear-gradient(160deg, rgba(91, 188, 163, 0.92), rgba(48, 130, 115, 0.92))'
   },
   aurora: {
     '--bg-base-start': '#0b1020',
@@ -101,7 +145,7 @@ export function SettingsProvider({ children }) {
   }, [settings]);
 
   useEffect(() => {
-    const appThemeVars = appThemeMap[settings.appDesign] ?? appThemeMap.tree;
+    const appThemeVars = appThemeMap[settings.appDesign] ?? appThemeMap.gray;
     Object.entries(appThemeVars).forEach(([key, value]) => {
       document.documentElement.style.setProperty(key, value);
     });
@@ -116,6 +160,7 @@ export function SettingsProvider({ children }) {
     document.documentElement.style.setProperty('--app-brightness', `${settings.brightness}%`);
     document.documentElement.dataset.font = settings.fontFamily;
     document.documentElement.dataset.appDesign = settings.appDesign;
+    document.documentElement.dataset.readerTheme = settings.theme;
   }, [settings]);
 
   const value = useMemo(
