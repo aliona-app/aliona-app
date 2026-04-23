@@ -3,14 +3,14 @@ import { useSettings } from '../contexts/SettingsContext';
 import useIsTouchDevice from '../hooks/useIsTouchDevice';
 import { appDesignDescriptions, appDesignLabels, readingModeLabels, t } from '../i18n/ru';
 
-const appDesignOptions = ['gray', 'graphite', 'paper', 'plum', 'emerald', 'aurora'];
+const appDesignOptions = ['gray', 'graphite', 'paper', 'rose', 'mocha', 'plum'];
 const designMatches = {
   gray: ['dark', 'night'],
   graphite: ['dark', 'night'],
   paper: ['light', 'sepia'],
-  plum: ['dark', 'night'],
-  emerald: ['sepia', 'dark'],
-  aurora: ['dark', 'night']
+  rose: ['light', 'sepia'],
+  mocha: ['sepia', 'dark'],
+  plum: ['dark', 'night']
 };
 
 export default function SettingsPage() {
